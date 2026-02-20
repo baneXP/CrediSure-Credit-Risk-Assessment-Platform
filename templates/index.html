@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrediSure â Credit Risk Assessment</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0f1117;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+        header {
+            background: linear-gradient(135deg, #1a1d27, #252836);
+            padding: 20px 40px;
+            border-bottom: 2px solid #e74c3c;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        header h1 { font-size: 26px; color: #fff; }
+        header span { color: #e74c3c; font-size: 13px; font-weight: 600; }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .card {
+            background: #1a1d27;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 1px solid #2a2d3e;
+        }
+        .card h2 {
+            font-size: 16px;
+            color: #e74c3c;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        label {
+            display: block;
+            font-size: 12px;
+            color: #8a8f9e;
+            margin-bottom: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px 14px;
+            background: #0f1117;
+            border: 1px solid #2a2d3e;
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #e74c3c;
+        }
+        .hint {
+            font-size: 11px;
+            color: #555;
+            margin-top: 4px;
+        }
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            letter-spacing: 1px;
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.9; }
+        .info-box {
+            background: #252836;
+            border-left: 4px solid #e74c3c;
+            padding: 14px 18px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 25px;
+            font-size: 13px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div>
+        <h1>ð¦ CrediSure</h1>
+        <span>Credit Risk Assessment Platform</span>
+    </div>
+</header>
+
+<div class="container">
+    <div class="info-box">
+        This system predicts the probability of loan default using financial and demographic data.
+        Enter applicant details below to get a risk assessment.
+    </div>
+
+    <form action="/predict" method="POST">
+
+        <!-- Section 1: Basic Info -->
+        <div class="card">
+            <h2>ð Applicant Information</h2>
+            <div class="grid">
+                <div>
+                    <label>Credit Limit ((₹))</label>
+                    <input type="number" name="LIMIT_BAL" placeholder="e.g. 50000" required>
+                    <p class="hint">Enter amount in â¹ </p>
+                </div>
+                <div>
+                    <label>Education Level</label>
+                    <select name="EDUCATION" required>
+                        <option value="">Select</option>
+                        <option value="1">1 â Graduate School</option>
+                        <option value="2">2 â University</option>
+                        <option value="3">3 â High School</option>
+                        <option value="4">4 â Others</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Age</label>
+                    <input type="number" name="AGE" placeholder="e.g. 28" min="18" max="100" required>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="card">
+            <h2>ð Payment Status (Last 6 Months)</h2>
+            <p style="font-size:12px; color:#666; margin-bottom:15px;">
+                -2 = No balance, -1 = Paid duly, 0 = Minimum paid, 1-9 = Months delayed
+            </p>
+            <div class="grid">
+                <div>
+                    <label>PAY_0 â September</label>
+                    <input type="number" name="PAY_0" placeholder="-1" min="-2" max="9" required>
+                </div>
+                <div>
+                    <label>PAY_2 â August</label>
+                    <input type="number" name="PAY_2" placeholder="-1" min="-2" max="9" required>
+                </div>
+                <div>
+                    <label>PAY_3 â July</label>
+                    <input type="number" name="PAY_3" placeholder="-1" min="-2" max="9" required>
+                </div>
+                <div>
+                    <label>PAY_4 â June</label>
+                    <input type="number" name="PAY_4" placeholder="-1" min="-2" max="9" required>
+                </div>
+                <div>
+                    <label>PAY_5 â May</label>
+                    <input type="number" name="PAY_5" placeholder="-1" min="-2" max="9" required>
+                </div>
+                <div>
+                    <label>PAY_6 â April</label>
+                    <input type="number" name="PAY_6" placeholder="-1" min="-2" max="9" required>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bill Amounts -->
+        <div class="card">
+            <h2>ð³ Bill Statement Amount ((₹))</h2>
+            <div class="grid">
+                <div><label>BILL_AMT1 â Sep</label><input type="number" name="BILL_AMT1" placeholder="e.g. 3000" required></div>
+                <div><label>BILL_AMT2 â Aug</label><input type="number" name="BILL_AMT2" placeholder="e.g. 2800" required></div>
+                <div><label>BILL_AMT3 â Jul</label><input type="number" name="BILL_AMT3" placeholder="e.g. 3200" required></div>
+                <div><label>BILL_AMT4 â Jun</label><input type="number" name="BILL_AMT4" placeholder="e.g. 2900" required></div>
+                <div><label>BILL_AMT5 â May</label><input type="number" name="BILL_AMT5" placeholder="e.g. 3100" required></div>
+                <div><label>BILL_AMT6 â Apr</label><input type="number" name="BILL_AMT6" placeholder="e.g. 2700" required></div>
+            </div>
+        </div>
+
+        <!-- Section 4: Payment Amounts -->
+        <div class="card">
+            <h2>ð° Payment Amount Made ((₹))</h2>
+            <div class="grid">
+                <div><label>PAY_AMT1 â Sep</label><input type="number" name="PAY_AMT1" placeholder="e.g. 1000" required></div>
+                <div><label>PAY_AMT2 â Aug</label><input type="number" name="PAY_AMT2" placeholder="e.g. 800" required></div>
+                <div><label>PAY_AMT3 â Jul</label><input type="number" name="PAY_AMT3" placeholder="e.g. 1200" required></div>
+                <div><label>PAY_AMT4 â Jun</label><input type="number" name="PAY_AMT4" placeholder="e.g. 900" required></div>
+                <div><label>PAY_AMT5 â May</label><input type="number" name="PAY_AMT5" placeholder="e.g. 1100" required></div>
+                <div><label>PAY_AMT6 â Apr</label><input type="number" name="PAY_AMT6" placeholder="e.g. 950" required></div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn">ð ASSESS CREDIT RISK</button>
+    </form>
+</div>
+
+</body>
+</html>
