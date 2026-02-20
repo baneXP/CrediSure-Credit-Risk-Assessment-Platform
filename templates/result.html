@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrediSure â Risk Result</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0f1117;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+        header {
+            background: linear-gradient(135deg, #1a1d27, #252836);
+            padding: 20px 40px;
+            border-bottom: 2px solid #e74c3c;
+        }
+        header h1 { font-size: 26px; color: #fff; }
+        header span { color: #e74c3c; font-size: 13px; font-weight: 600; }
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .risk-card {
+            background: #1a1d27;
+            border-radius: 16px;
+            padding: 40px;
+            border: 2px solid {{ color }};
+            margin-bottom: 30px;
+        }
+        .risk-badge {
+            display: inline-block;
+            padding: 10px 30px;
+            background: {{ color }};
+            color: white;
+            border-radius: 50px;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+        .probability {
+            font-size: 64px;
+            font-weight: 900;
+            color: {{ color }};
+            margin-bottom: 10px;
+        }
+        .prob-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .meter {
+            background: #0f1117;
+            border-radius: 50px;
+            height: 14px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .meter-fill {
+            height: 100%;
+            width: {{ probability }}%;
+            background: {{ color }};
+            border-radius: 50px;
+            transition: width 1s ease;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+            text-align: left;
+        }
+        .stat-box {
+            background: #0f1117;
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid #2a2d3e;
+        }
+        .stat-box label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .stat-box p {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            margin-top: 5px;
+        }
+        .message {
+            background: #252836;
+            border-left: 4px solid {{ color }};
+            padding: 16px 20px;
+            border-radius: 0 10px 10px 0;
+            text-align: left;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #bbb;
+            line-height: 1.6;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 40px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            margin-top: 25px;
+            cursor: pointer;
+            border: none;
+        }
+        .error-card {
+            background: #1a1d27;
+            border: 2px solid #e74c3c;
+            border-radius: 16px;
+            padding: 40px;
+            color: #e74c3c;
+        }
+        .disclaimer {
+            font-size: 11px;
+            color: #444;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>ð¦ CrediSure</h1>
+    <span>Credit Risk Assessment Platform</span>
+</header>
+
+<div class="container">
+    {% if error %}
+    <div class="error-card">
+        <h2>â ï¸ Error</h2>
+        <p style="margin-top:15px; color:#aaa;">{{ error }}</p>
+        <a href="/" class="btn" style="margin-top:20px; display:inline-block;">â Try Again</a>
+    </div>
+    {% else %}
+
+    <div class="risk-card">
+        <div class="risk-badge">{{ risk_level }} RISK</div>
+
+        <div class="probability">{{ probability }}%</div>
+        <div class="prob-label">Probability of Loan Default</div>
+
+        <div class="meter">
+            <div class="meter-fill"></div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-box">
+                <label>Credit Limit</label>
+                <p>â¹ {{ "{:,.0f}".format(limit_bal) }}</p>
+            </div>
+            <div class="stat-box">
+                <label>Applicant Age</label>
+                <p>{{ age }} years</p>
+            </div>
+            <div class="stat-box">
+                <label>Missed Payments</label>
+                <p>{{ missed }} months</p>
+            </div>
+            <div class="stat-box">
+                <label>Payment Ratio</label>
+                <p>{{ pay_ratio }}</p>
+            </div>
+        </div>
+
+        <div class="message">
+            {% if risk_level == 'HIGH' %}
+            â ï¸ <strong>High Default Risk Detected.</strong> This applicant shows significant
+            financial stress indicators including missed payments and high credit utilization.
+            Loan approval is not recommended without additional collateral or guarantor.
+            {% elif risk_level == 'MEDIUM' %}
+            â¡ <strong>Moderate Risk.</strong> This applicant shows some concerning payment patterns.
+            Consider approving with a reduced credit limit or additional verification.
+            {% else %}
+            â <strong>Low Default Risk.</strong> This applicant demonstrates healthy payment
+            behaviour and manageable debt levels. Loan approval can be considered.
+            {% endif %}
+        </div>
+
+        <p class="disclaimer">
+            This is a decision-support tool. Final lending decisions should be made by qualified professionals.
+        </p>
+    </div>
+
+    <a href="/" class="btn">â Assess Another Applicant</a>
+
+    {% endif %}
+</div>
+
+</body>
+</html>
