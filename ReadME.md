@@ -1,208 +1,80 @@
-# CrediSure – Credit Risk Assessment Platform
+# CrediSure — Credit Risk Assessment Platform
 
-CrediSure is an end-to-end **credit risk assessment system** that predicts the probability of loan default using applicant financial and demographic data.  
-The project demonstrates a complete **machine learning pipeline**, from data preprocessing and feature engineering to model evaluation and deployment.
+> An end-to-end ML platform predicting loan default probability using applicant financial and demographic data.
+
+ **Live Demo:** [credisure.me](http://credisure.me:5000) &nbsp;|&nbsp;  **GitHub:** [baneXP/CrediSure](https://github.com/baneXP/CrediSure-Credit-Risk-Assessment-Platform)
 
 ---
+
+## Tech Stack
+
+| Layer | Tools |
+|-------|-------|
+| Language | Python |
+| ML Libraries | Pandas, NumPy, Scikit-learn, Imbalanced-learn |
+| Models | Logistic Regression, Random Forest, XGBoost, LightGBM |
+| Class Imbalance | SMOTE |
+| Web App | Flask + Gunicorn |
+| Deployment | AWS EC2 (ap-south-1) |
+| Domain | credisure.me |
+
+---
+
+## Features
+
+- End-to-end credit risk prediction pipeline on **29,925 real-world records**
+- **9 custom engineered features** (payment ratio, credit utilization, missed payments, risk score)
+- Handles **78:22 class imbalance** using SMOTE
+- Compared **4 models** evaluated on ROC-AUC, Precision and Recall
+- **Flask web app** deployed on AWS EC2 with Gunicorn — accessible live at [credisure.me](http://credisure.me:5000)
+
+---
+
+## ML Pipeline
+
+```
+Raw Data → Cleaning → EDA → Feature Engineering
+→ SMOTE → Model Training → Evaluation → Flask API → EC2 Deployment
+```
+
+1. **Data Cleaning** — missing values, encoding, scaling
+2. **EDA** — distribution, correlation, risk factor analysis
+3. **Feature Engineering** — 9 custom features added on top of original 21
+4. **Modelling** — Logistic Regression, Random Forest, XGBoost, LightGBM
+5. **Evaluation** — ROC-AUC, Precision, Recall, Confusion Matrix
+6. **Deployment** — Flask + Gunicorn on AWS EC2, live at credisure.me
+
+---
+
+## Model Results
+
+| Model | ROC-AUC |
+|-------|---------|
+| Random Forest | 0.760 |
+| XGBoost | 0.749 |
+| LightGBM | 0.746 |
+| Logistic Regression | 0.724 |
+
+---
+
+## Run Locally
+
+```bash
+git clone https://github.com/baneXP/CrediSure-Credit-Risk-Assessment-Platform.git
+cd CrediSure-Credit-Risk-Assessment-Platform
+pip install -r requirements.txt
+python app.py
+```
+
+Open `http://localhost:5000`
+
+---
+
 ## Dataset
 
-The model was trained and evaluated using the **UCI Default of Credit Card Clients dataset**, a publicly available benchmark dataset for credit risk modeling.
-
-- **Dataset :** Default of Credit Card Clients
-- - **Source:** [UCI Machine Learning Repository – Default of Credit Card Clients](https://archive.ics.uci.edu/dataset/350/default+of+credit+card+clients)  
-- **Description:** Contains financial, demographic, bill amount, and payment history features of credit card clients, along with a binary default label.
-  
----
-## Features
-
-- End-to-end **credit risk prediction pipeline**
-- Robust **data cleaning, EDA, and feature engineering**
-- **Logistic Regression** with L1 (Lasso) and L2 (Ridge) regularization
-- Handles **class imbalance using SMOTE**
-- Model evaluation using **ROC-AUC, precision, recall**
-- **Flask-based web application** for probability-based predictions
+UCI Default of Credit Card Clients — 29,925 records, 23 features  
+Source: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients)
 
 ---
 
-## Problem Statement
-
-Financial institutions need to assess the **risk of loan default** accurately to minimize losses and make informed lending decisions.  
-This project aims to build a **data-driven decision-support system** that outputs a probability score representing the applicant’s credit risk.
-
----
-
-## Tech Stack
-
-- **Language:** Python  
-- **Libraries:** Pandas, NumPy, Scikit-learn, Imbalanced-learn (SMOTE)  
-- **Modeling:** Logistic Regression (L1 & L2 Regularization)  
-- **Visualization:** Matplotlib, Seaborn  
-- **Deployment:** Flask  
-
----
-
-## 📊 Data Pipeline
-
-1. **Data Ingestion**
-   - Load financial and demographic loan applicant data
-
-2. **Data Cleaning**
-   - Handle missing values
-   - Encode categorical variables
-   - Scale numerical features
-
-3. **Exploratory Data Analysis (EDA)**
-   - Distribution analysis
-   - Correlation analysis
-   - Identification of key risk-driving factors
-
-4. **Feature Engineering**
-   - Feature selection using regularization
-   - Transformation for model stability
-
-5. **Model Training**
-   - Logistic Regression with:
-     - L1 (Lasso) for feature selection
-     - L2 (Ridge) for stability
-
-6. **Handling Class Imbalance**
-   - Applied **SMOTE** to balance minority and majority classes
-
-7. **Model Evaluation**
-   - ROC-AUC
-   - Precision & Recall
-   - Confusion Matrix
-
-8. **Deployment**
-   - Flask app serving probability-based predictions
-
----
-
-## Model Evaluation Metrics
-
-- **ROC-AUC**
-- **Precision**
-- **Recall**
-- **Confusion Matrix**
-
-These metrics ensure balanced evaluation, especially for imbalanced datasets.
-
----
-
-## Application Output
-
-- Takes applicant details as input
-- Returns a **probability score** indicating loan default risk
-- Designed as a **decision-support tool**, not a binary accept/reject system
-
----
-
-## How to Run Locally
-
-```bash
-# Clone the repository
-git clone https://github.com/baneXP/CrediSure-Credit-Risk-Assessment-Platform.git
-cd CrediSure-Credit-Risk-Assessment-Platform
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the Flask app
-python app.py
-
-## Features
-
-- End-to-end **credit risk prediction pipeline**
-- Robust **data cleaning, EDA, and feature engineering**
-- **Logistic Regression** with L1 (Lasso) and L2 (Ridge) regularization
-- Handles **class imbalance using SMOTE**
-- Model evaluation using **ROC-AUC, precision, recall**
-- **Flask-based web application** for probability-based predictions
-
----
-
-## Problem Statement
-
-Financial institutions need to assess the **risk of loan default** accurately to minimize losses and make informed lending decisions.  
-This project aims to build a **data-driven decision-support system** that outputs a probability score representing the applicant’s credit risk.
-
----
-
-## Tech Stack
-
-- **Language:** Python  
-- **Libraries:** Pandas, NumPy, Scikit-learn, Imbalanced-learn (SMOTE)  
-- **Modeling:** Logistic Regression (L1 & L2 Regularization)  
-- **Visualization:** Matplotlib, Seaborn  
-- **Deployment:** Flask  
-
----
-
-## 📊 Data Pipeline
-
-1. **Data Ingestion**
-   - Load financial and demographic loan applicant data
-
-2. **Data Cleaning**
-   - Handle missing values
-   - Encode categorical variables
-   - Scale numerical features
-
-3. **Exploratory Data Analysis (EDA)**
-   - Distribution analysis
-   - Correlation analysis
-   - Identification of key risk-driving factors
-
-4. **Feature Engineering**
-   - Feature selection using regularization
-   - Transformation for model stability
-
-5. **Model Training**
-   - Logistic Regression with:
-     - L1 (Lasso) for feature selection
-     - L2 (Ridge) for stability
-
-6. **Handling Class Imbalance**
-   - Applied **SMOTE** to balance minority and majority classes
-
-7. **Model Evaluation**
-   - ROC-AUC
-   - Precision & Recall
-   - Confusion Matrix
-
-8. **Deployment**
-   - Flask app serving probability-based predictions
-
----
-
-## Model Evaluation Metrics
-
-- **ROC-AUC**
-- **Precision**
-- **Recall**
-- **Confusion Matrix**
-
-These metrics ensure balanced evaluation, especially for imbalanced datasets.
-
----
-
-## Application Output
-
-- Takes applicant details as input
-- Returns a **probability score** indicating loan default risk
-- Designed as a **decision-support tool**, not a binary accept/reject system
-
----
-
-## How to Run Locally
-
-```bash
-# Clone the repository
-git clone https://github.com/baneXP/CrediSure-Credit-Risk-Assessment-Platform.git
-cd CrediSure-Credit-Risk-Assessment-Platform
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the Flask app
-python app.py
+*Built by [Satyam Sharma](https://linkedin.com/in/sharmasatyam01) • Deployed on AWS EC2*
